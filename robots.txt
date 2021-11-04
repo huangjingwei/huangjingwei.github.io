@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: http://huangjingwei.github.io/sitemap.xml
+Sitemap: https://huangjingwei.github.io/sitemap.xml
