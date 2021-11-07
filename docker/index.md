@@ -33,7 +33,6 @@ $ sudo apt-get remove docker docker-engine docker.io containerd runc
 
 ```sh
 $ sudo apt-get update
-
 $ sudo apt-get install \
     ca-certificates \
     curl \
@@ -45,7 +44,6 @@ $ sudo apt-get install \
 
 ```sh
 $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
 # 如果是国内源：
 $ curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
 ```
@@ -65,7 +63,6 @@ $ sudo add-apt-repository \
 
 ```sh
 $ sudo apt-get update
-
 $ sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 
@@ -73,7 +70,6 @@ $ sudo apt-get install docker-ce docker-ce-cli containerd.io
 
 ```sh
 $ sudo groupadd docker
-
 $ sudo usermod -aG docker $USER
 ```
 
@@ -85,7 +81,6 @@ $ sudo usermod -aG docker $USER
 
 ```sh
 $ sudo apt-get purge -y docker-engine docker docker-ce docker-ce-cli containerd.io
-
 $ sudo apt-get autoremove -y --purge docker-engine docker docker-ce docker-ce-cli containerd.io
 ```
 
