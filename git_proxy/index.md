@@ -1,4 +1,4 @@
-# Git 笔记
+# Git 网络代理
 
 
 ## 网络代理
@@ -15,7 +15,7 @@ git下载代码的时候可以通过https或ssh。有时候拉取GitHub上的代
 
 ```sh
 git config --global http.proxy "http://127.0.0.1:3128"
-git config --global https.proxy "https://127.0.0.1:3128"
+git config --global https.proxy "http://127.0.0.1:3128"
 ```
 
 以上配置生效会在用户目录下的`.gitconfig`文件中体现。
@@ -27,7 +27,7 @@ git config --global https.proxy "https://127.0.0.1:3128"
 [http]
         proxy = http://127.0.0.1:3128
 [https]
-        proxy = https://127.0.0.1:3128
+        proxy = http://127.0.0.1:3128
 
 ```
 
