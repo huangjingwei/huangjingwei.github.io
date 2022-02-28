@@ -1,7 +1,7 @@
 # Git 网络代理
 
 
-## 网络代理
+## 1 网络代理
 
 git下载代码的时候可以通过https或ssh。有时候拉取GitHub上的代码因为网络原因出现失败，我们可以通过配置网络代理解决。
 
@@ -13,14 +13,14 @@ git下载代码的时候可以通过https或ssh。有时候拉取GitHub上的代
 
 ### HTTPS
 
-```sh
+```Bash
 git config --global http.proxy "http://127.0.0.1:3128"
 git config --global https.proxy "http://127.0.0.1:3128"
 ```
 
 以上配置生效会在用户目录下的`.gitconfig`文件中体现。
 
-```yml
+```
 [user]
         name = huangjingwei
         email = example.com
@@ -35,7 +35,7 @@ git config --global https.proxy "http://127.0.0.1:3128"
 
 在用户目录下，新建`.ssh/config`。
 
-```sh
+```Bash
 Host github.com
    User git
    IdentityFile "C:\Users\your-username\.ssh\id_rsa"

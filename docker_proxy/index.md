@@ -1,7 +1,7 @@
 # Docker 安装和网络代理
 
 
-## Docker
+## 1 Docker
 
 Docker是一个开放平台，可用于容器镜像的开发、交付和运行。
 
@@ -13,7 +13,7 @@ Docker名词一般是泛指。一般会代指Docker引擎(Docker Engine)或Docke
 - Docker Engine API。
 - Docker 客户端。
 
-## Docker的安装卸载
+## 2 Docker的安装卸载
 
 Docker的版本自`17.03`后分为CE(Community Edition)和EE(Enterprise Edition)，个人使用安装CE版本。
 
@@ -25,13 +25,13 @@ Linux的发行版一般会自带docker的软件包或者下载`.deb`文件手动
 
 安装之前建议先卸载旧版本：
 
-```sh
+```Bash
 $ sudo apt-get remove docker docker-engine docker.io containerd runc
 ```
 
 添加使用HTTPS传输的软件包和CA证书：
 
-```sh
+```Bash
 $ sudo apt-get update
 $ sudo apt-get install \
     ca-certificates \
@@ -42,7 +42,7 @@ $ sudo apt-get install \
 
 添加软件源需要的GPG密钥：
 
-```sh
+```Bash
 $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 # 如果是国内源：
 $ curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
@@ -50,7 +50,7 @@ $ curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-ke
 
 配置仓库：
 
-```sh
+```Bash
 $ sudo add-apt-repository \
     "deb [arch=$(dpkg --print-architecture) https://download.docker.com/linux/ubuntu \
     $(lsb_release -cs) stable"
@@ -61,14 +61,14 @@ $ sudo add-apt-repository \
 
 执行安装：
 
-```sh
+```Bash
 $ sudo apt-get update
 $ sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 
 建立docker用户组：
 
-```sh
+```Bash
 $ sudo groupadd docker
 $ sudo usermod -aG docker $USER
 ```
@@ -79,21 +79,21 @@ $ sudo usermod -aG docker $USER
 
 卸载Docker Engine：
 
-```sh
+```Bash
 $ sudo apt-get purge -y docker-engine docker docker-ce docker-ce-cli containerd.io
 $ sudo apt-get autoremove -y --purge docker-engine docker docker-ce docker-ce-cli containerd.io
 ```
 
 以上的命令不会删除主机上的镜像、容器、卷和用户创建的配置文件等，如需清理：
 
-```sh
+```Bash
 $ sudo rm -rf /var/lib/docker /var/lib/containerd /etc/docker
 $ sudo rm /etc/apparmor.d/docker
 $ sudo groupdel docker
 $ sudo rm -rf /var/run/docker.sock
 ```
 
-## 网络代理配置
+## 3 网络代理配置
 
 在公司经常需要挂代理才可以正常访问互联网。如果是这种情况，需要为Docker配置代理。
 在Docker的使用中，需要访问外网的场景一般有：
@@ -102,20 +102,22 @@ $ sudo rm -rf /var/run/docker.sock
 - Container代理配置
 - docker build代理配置
 
+下文主要参考：[Docker的三种网络代理配置]。
+
 ### dockerd代理配置
 
 当你执行`docker login`、`docker push`、`docker pull`时，实际上是在和docker-client交互，
 这时候docker-client操作dockerd去访问外网的镜像仓库时，就会有相关的API发出，这时候需要给dockerd去配置代理。
 docker受到systemd的管控，所以需要修改的是systemd的配置。
 
-```sh
+```Bash
 sudo mkdir -p /etc/systemd/system/docker.service.d
 sudo touch /etc/systemd/system/docker.service.d/proxy.conf
 ```
 
 这里新创建的配置文件的命名只要符合`*.conf`的形式即可。添加内容如下：
 
-```sh
+```
 [Service]
 Environment="HTTP_PROXY=http://<proxy-addr>:<proxy-port>"
 Environment="HTTPS_PROXY=http://<proxy-addr>:<proxy-port>"
@@ -143,7 +145,7 @@ $ sudo systemctl restart docker
 
 当容器运行时，容器内的运用需要代理访问时，需要配置`~/.docker/config.json`，当然只生效在Docker的`17.07`及其以后版本。
 
-```sh
+```yaml
 {
  "proxies":
  {
@@ -182,7 +184,7 @@ Dockerfile的`ARG`和`docker build`的`--build-arg`是一致的，
 建议在构建时通过`--build-arg <varname>=<value>`参数来指定或重设置这些变量的值。
 
 所以，`docker build`配置代理：
-```sh
+```Bash
 docker build . \
     --build-arg "http_proxy=http://<proxy-addr>:<proxy-port>" \
     --build-arg "https_proxy=http://<proxy-addr>:<proxy-port>" \
@@ -204,5 +206,5 @@ docker build . \
 
 
 [安装向导]:https://docs.docker.com/engine/install/ubuntu/
-
+[Docker的三种网络代理配置]:https://note.qidong.name/2020/05/docker-proxy/
 
