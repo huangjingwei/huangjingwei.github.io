@@ -121,6 +121,7 @@ pipenv install pytest --dev
 
 `Pipfile`自动更新：
 ```toml
+[[source]]
 url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
