@@ -1,0 +1,280 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>Pipenv 的基本使用 - Walle's craft</title><meta name=Description content="关于 LoveIt 主题"><meta property="og:title" content="Pipenv 的基本使用"><meta property="og:description" content="1 pipenv 安装 Pipenv是Python项目的依赖管理器。尽管pip可以安装Python包，但仍推荐使用Pipenv，因为它是一种更高级的工具，可"><meta property="og:type" content="article"><meta property="og:url" content="http://huangjingwei.github.io/pipenv_usage/"><meta property="og:image" content="http://huangjingwei.github.io/logo.png"><meta property="article:published_time" content="2022-03-05T19:38:02+08:00"><meta property="article:modified_time" content="2022-03-05T19:38:02+08:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="http://huangjingwei.github.io/logo.png"><meta name=twitter:title content="Pipenv 的基本使用"><meta name=twitter:description content="1 pipenv 安装 Pipenv是Python项目的依赖管理器。尽管pip可以安装Python包，但仍推荐使用Pipenv，因为它是一种更高级的工具，可"><meta name=application-name content="LoveIt"><meta name=apple-mobile-web-app-title content="LoveIt"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=http://huangjingwei.github.io/pipenv_usage/><link rel=prev href=http://huangjingwei.github.io/google_analytics/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Pipenv 的基本使用","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"http:\/\/huangjingwei.github.io\/pipenv_usage\/"},"image":["http:\/\/huangjingwei.github.io\/images\/Apple-Devices-Preview.png"],"genre":"posts","keywords":"Python","wordcount":2125,"url":"http:\/\/huangjingwei.github.io\/pipenv_usage\/","datePublished":"2022-03-05T19:38:02+08:00","dateModified":"2022-03-05T19:38:02+08:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"立青人韦","logo":"http:\/\/huangjingwei.github.io\/images\/avatar.png"},"author":{"@type":"Person","name":"立青人韦"},"description":""}</script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-221439596-1"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','UA-221439596-1');</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('dark'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'dark'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Walle's craft">Walle's craft</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>所有文章 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Walle's craft">Walle's craft</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>所有文章</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">Pipenv 的基本使用</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>立青人韦</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/python/><i class="far fa-folder fa-fw"></i>Python</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-03-05>2022-03-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2125 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id=/pipenv_usage/ class=leancloud_visitors data-flag-title="Pipenv 的基本使用">
+<i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+</span>&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#1-pipenv-安装>1 pipenv 安装</a></li><li><a href=#2-创建虚拟环境>2 创建虚拟环境</a><ul><li><a href=#pipenv---python>pipenv &ndash;python</a></li><li><a href=#pipenv---three----two>pipenv &ndash;three / &ndash;two</a></li><li><a href=#pipenv-install>pipenv install</a></li></ul></li><li><a href=#3-pipfile-和-pipfilelock>3 Pipfile 和 Pipfile.lock</a></li><li><a href=#4-版本管理>4 版本管理</a></li><li><a href=#5-可修改依赖-如--e-->5 可修改依赖 (如 -e . )</a></li><li><a href=#6-使用pipenv进行部署>6 使用pipenv进行部署</a></li><li><a href=#7-pipfile-vs-setuppy>7 Pipfile vs setup.py</a></li></ul></nav></div></div><div class=content id=content><a class=lightgallery href=/python/pipenv_usage/pipenv.jpg title=/python/pipenv_usage/pipenv.jpg data-thumbnail=/python/pipenv_usage/pipenv.jpg><img class=lazyload src=/svg/loading.min.svg data-src=/python/pipenv_usage/pipenv.jpg data-srcset="/python/pipenv_usage/pipenv.jpg, /python/pipenv_usage/pipenv.jpg 1.5x, /python/pipenv_usage/pipenv.jpg 2x" data-sizes=auto alt=/python/pipenv_usage/pipenv.jpg></a><h2 id=1-pipenv-安装>1 pipenv 安装</h2><p>Pipenv是Python项目的依赖管理器。尽管pip可以安装Python包，但仍推荐使用Pipenv，因为它是一种更高级的工具，可简化依赖关系管理的常见使用情况。</p><p>使用pip安装：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>$ pip install --user pipenv
+</code></pre></td></tr></table></div></div><p><code>--user</code>代表<a href=https://pip.pypa.io/en/stable/user_guide/#user-installs target=_blank rel="noopener noreffer">用户安装模式</a>，以防止破坏任何系统范围的包。</p><p>如果安装后, shell中没有<code>pipenv</code>，则需要将<a href=https://docs.python.org/3/library/site.html#site.USER_BASE target=_blank rel="noopener noreffer">用户基础目录</a>的二进制文件目录添加到<code>PATH</code>中。</p><div class="details admonition tip open"><div class="details-summary admonition-title"><i class="icon fas fa-lightbulb fa-fw"></i>Tip<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content><p>在Linux和macOS上，您可以通过运行<code>python -m site --user-base</code>找到用户基础目录，然后把<code>bin</code>加到目录末尾。比如，上述命令典型地会打印出 <code>~/.local</code>（~ 会扩展为您的家目录的局对路径），然后将 <code>~/.local/bin</code> 添加到<code>PATH</code>中。</p><p>在 Windows 上，您通过运行<code>py -m site --user-site</code>找到用户基础目录，然后将<code>site-packages</code>替换为<code>Scripts</code>。比如，上述命令可能返回<code>C:\Users\Username\AppData\Roaming\Python310\site-packages</code>，然后您需要在<code>PATH</code>中包含<code>C:\Users\Username\AppData\Roaming\Python310\Scripts</code>。</p></div></div></div><h2 id=2-创建虚拟环境>2 创建虚拟环境</h2><h3 id=pipenv---python>pipenv &ndash;python</h3><p>可以指定版本创建，如果指定版本不存在:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>pienv --python 3.8
+
+Warning: Python 3.8 was not found on your system...
+</code></pre></td></tr></table></div></div><h3 id=pipenv---three----two>pipenv &ndash;three / &ndash;two</h3><p>或者指定<code>Python 3/2</code>创建虚拟环境：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>pipenv --three / --two
+</code></pre></td></tr></table></div></div><div class="details admonition note open"><div class="details-summary admonition-title"><i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content>以上i这两种创建指令会自动创建<code>Pipfile</code>，但不会有<code>Pipfile.lock</code>。</div></div></div><h3 id=pipenv-install>pipenv install</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>pipenv install
+pipenv install --three / --two
+</code></pre></td></tr></table></div></div><div class="details admonition note open"><div class="details-summary admonition-title"><i class="icon fas fa-pencil-alt fa-fw"></i>Note<i class="details-icon fas fa-angle-right fa-fw"></i></div><div class=details-content><div class=admonition-content><p><code>pipenv install</code>在一个初始化工程中会自动创建出<code>Pipfile</code>和<code>Pipfile.lock</code>。</p><p>如果在一个已经是pipenv管理的工程中执行该命令，会在本地创建虚拟环境并自动安装<code>Pipfile</code>中的包。</p></div></div></div><p>等价指令：</p><p>1.<code>pipenv install</code>在新建工程中：</p><p><code>pipenv install</code> = <code>pipenv --three</code> + <code>pipenv lock</code> + <code>pipenv sync</code></p><p>2.<code>pipenv install</code>在已有<code>Pipfile</code>的工程中：</p><p><code>pipenv install</code> = <code>pipenv update</code> = <code>pipenv lock</code> + <code>pipenv sync</code></p><h2 id=3-pipfile-和-pipfilelock>3 Pipfile 和 Pipfile.lock</h2><p>基于一个空项目创建的<code>Pipfile</code>文件内容如下：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-toml data-lang=toml><span class=p>[[</span><span class=nx>source</span><span class=p>]]</span>
+<span class=nx>url</span> <span class=p>=</span> <span class=s2>&#34;https://pypi.org/simple&#34;</span>
+<span class=nx>verify_ssl</span> <span class=p>=</span> <span class=kc>true</span>
+<span class=nx>name</span> <span class=p>=</span> <span class=s2>&#34;pypi&#34;</span>
+
+<span class=p>[</span><span class=nx>packages</span><span class=p>]</span>
+
+<span class=p>[</span><span class=nx>dev</span><span class=err>-</span><span class=nx>packages</span><span class=p>]</span>
+
+<span class=p>[</span><span class=nx>requires</span><span class=p>]</span>
+<span class=nx>python_version</span> <span class=p>=</span> <span class=s2>&#34;3.10&#34;</span>
+</code></pre></td></tr></table></div></div><p>基于<code>pipenv install</code>会多出一个<code>Pipfile.lock</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-json data-lang=json><span class=p>{</span>
+    <span class=nt>&#34;_meta&#34;</span><span class=p>:</span> <span class=p>{</span>
+        <span class=nt>&#34;hash&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;sha256&#34;</span><span class=p>:</span> <span class=s2>&#34;fedbd2ab7afd84cf16f128af0619749267b62277b4cb6989ef16d4bef6e4eef2&#34;</span>
+        <span class=p>},</span>
+        <span class=nt>&#34;pipfile-spec&#34;</span><span class=p>:</span> <span class=mi>6</span><span class=p>,</span>
+        <span class=nt>&#34;requires&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;python_version&#34;</span><span class=p>:</span> <span class=s2>&#34;3.10&#34;</span>
+        <span class=p>},</span>
+        <span class=nt>&#34;sources&#34;</span><span class=p>:</span> <span class=p>[</span>
+            <span class=p>{</span>
+                <span class=nt>&#34;name&#34;</span><span class=p>:</span> <span class=s2>&#34;pypi&#34;</span><span class=p>,</span>
+                <span class=nt>&#34;url&#34;</span><span class=p>:</span> <span class=s2>&#34;https://pypi.org/simple&#34;</span><span class=p>,</span>
+                <span class=nt>&#34;verify_ssl&#34;</span><span class=p>:</span> <span class=kc>true</span>
+            <span class=p>}</span>
+        <span class=p>]</span>
+    <span class=p>},</span>
+    <span class=nt>&#34;default&#34;</span><span class=p>:</span> <span class=p>{},</span>
+    <span class=nt>&#34;develop&#34;</span><span class=p>:</span> <span class=p>{}</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><p>安装package：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>pipenv install requests
+pipenv install pytest --dev
+</code></pre></td></tr></table></div></div><p><code>Pipfile</code>自动更新：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-toml data-lang=toml><span class=nx>url</span> <span class=p>=</span> <span class=s2>&#34;https://pypi.org/simple&#34;</span>
+<span class=nx>verify_ssl</span> <span class=p>=</span> <span class=kc>true</span>
+<span class=nx>name</span> <span class=p>=</span> <span class=s2>&#34;pypi&#34;</span>
+
+<span class=p>[</span><span class=nx>packages</span><span class=p>]</span>
+<span class=nx>requests</span> <span class=p>=</span> <span class=s2>&#34;*&#34;</span>
+
+<span class=p>[</span><span class=nx>dev</span><span class=err>-</span><span class=nx>packages</span><span class=p>]</span>
+
+<span class=p>[</span><span class=nx>requires</span><span class=p>]</span>
+<span class=nx>python_version</span> <span class=p>=</span> <span class=s2>&#34;3.10&#34;</span>
+</code></pre></td></tr></table></div></div><p>为限制篇幅，以下的<code>Pipfile.lock</code>是只安装<code>requests</code>的内容：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-json data-lang=json><span class=p>{</span>
+    <span class=nt>&#34;_meta&#34;</span><span class=p>:</span> <span class=p>{</span>
+        <span class=nt>&#34;hash&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;sha256&#34;</span><span class=p>:</span> <span class=s2>&#34;a416d48a2c30d4acf425cb96d7ac6672753db8e8f6c962a328848db5b9a290a1&#34;</span>
+        <span class=p>},</span>
+        <span class=nt>&#34;pipfile-spec&#34;</span><span class=p>:</span> <span class=mi>6</span><span class=p>,</span>
+        <span class=nt>&#34;requires&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;python_version&#34;</span><span class=p>:</span> <span class=s2>&#34;3.10&#34;</span>
+        <span class=p>},</span>
+        <span class=nt>&#34;sources&#34;</span><span class=p>:</span> <span class=p>[</span>
+            <span class=p>{</span>
+                <span class=nt>&#34;name&#34;</span><span class=p>:</span> <span class=s2>&#34;pypi&#34;</span><span class=p>,</span>
+                <span class=nt>&#34;url&#34;</span><span class=p>:</span> <span class=s2>&#34;https://pypi.org/simple&#34;</span><span class=p>,</span>
+                <span class=nt>&#34;verify_ssl&#34;</span><span class=p>:</span> <span class=kc>true</span>
+            <span class=p>}</span>
+        <span class=p>]</span>
+    <span class=p>},</span>
+    <span class=nt>&#34;default&#34;</span><span class=p>:</span> <span class=p>{</span>
+        <span class=nt>&#34;certifi&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;hashes&#34;</span><span class=p>:</span> <span class=p>[</span>
+                <span class=s2>&#34;sha256:78884e7c1d4b00ce3cea67b44566851c4343c120abd683433ce934a68ea58872&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;sha256:d62a0163eb4c2344ac042ab2bdf75399a71a2d8c7d47eac2e2ee91b9d6339569&#34;</span>
+            <span class=p>],</span>
+            <span class=nt>&#34;version&#34;</span><span class=p>:</span> <span class=s2>&#34;==2021.10.8&#34;</span>
+        <span class=p>},</span>
+        <span class=nt>&#34;charset-normalizer&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;hashes&#34;</span><span class=p>:</span> <span class=p>[</span>
+                <span class=s2>&#34;sha256:2857e29ff0d34db842cd7ca3230549d1a697f96ee6d3fb071cfa6c7393832597&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;sha256:6881edbebdb17b39b4eaaa821b438bf6eddffb4468cf344f09f89def34a8b1df&#34;</span>
+            <span class=p>],</span>
+            <span class=nt>&#34;markers&#34;</span><span class=p>:</span> <span class=s2>&#34;python_version &gt;= &#39;3&#39;&#34;</span><span class=p>,</span>
+            <span class=nt>&#34;version&#34;</span><span class=p>:</span> <span class=s2>&#34;==2.0.12&#34;</span>
+        <span class=p>},</span>
+        <span class=nt>&#34;idna&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;hashes&#34;</span><span class=p>:</span> <span class=p>[</span>
+                <span class=s2>&#34;sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;sha256:9d643ff0a55b762d5cdb124b8eaa99c66322e2157b69160bc32796e824360e6d&#34;</span>
+            <span class=p>],</span>
+            <span class=nt>&#34;markers&#34;</span><span class=p>:</span> <span class=s2>&#34;python_version &gt;= &#39;3&#39;&#34;</span><span class=p>,</span>
+            <span class=nt>&#34;version&#34;</span><span class=p>:</span> <span class=s2>&#34;==3.3&#34;</span>
+        <span class=p>},</span>
+        <span class=nt>&#34;requests&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;hashes&#34;</span><span class=p>:</span> <span class=p>[</span>
+                <span class=s2>&#34;sha256:68d7c56fd5a8999887728ef304a6d12edc7be74f1cfa47714fc8b414525c9a61&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;sha256:f22fa1e554c9ddfd16e6e41ac79759e17be9e492b3587efa038054674760e72d&#34;</span>
+            <span class=p>],</span>
+            <span class=nt>&#34;index&#34;</span><span class=p>:</span> <span class=s2>&#34;pypi&#34;</span><span class=p>,</span>
+            <span class=nt>&#34;version&#34;</span><span class=p>:</span> <span class=s2>&#34;==2.27.1&#34;</span>
+        <span class=p>},</span>
+        <span class=nt>&#34;urllib3&#34;</span><span class=p>:</span> <span class=p>{</span>
+            <span class=nt>&#34;hashes&#34;</span><span class=p>:</span> <span class=p>[</span>
+                <span class=s2>&#34;sha256:000ca7f471a233c2251c6c7023ee85305721bfdf18621ebff4fd17a8653427ed&#34;</span><span class=p>,</span>
+                <span class=s2>&#34;sha256:0e7c33d9a63e7ddfcb86780aac87befc2fbddf46c58dbb487e0855f7ceec283c&#34;</span>
+            <span class=p>],</span>
+            <span class=nt>&#34;markers&#34;</span><span class=p>:</span> <span class=s2>&#34;python_version &gt;= &#39;2.7&#39; and python_version not in &#39;3.0, 3.1, 3.2, 3.3, 3.4&#39; and python_version &lt; &#39;4&#39;&#34;</span><span class=p>,</span>
+            <span class=nt>&#34;version&#34;</span><span class=p>:</span> <span class=s2>&#34;==1.26.8&#34;</span>
+        <span class=p>}</span>
+    <span class=p>},</span>
+    <span class=nt>&#34;develop&#34;</span><span class=p>:</span> <span class=p>{}</span>
+<span class=p>}</span>
+</code></pre></td></tr></table></div></div><p>可以发现：
+<code>Pipfile.lock</code>会生成所有已下载包的sha256哈希值(包括中间依赖)。这使得pip在不安全网络情况下，保证你安装了你想要的包，或者从一个不信任的PyPI源下载依赖.</p><p>查看依赖：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>$ pipenv graph       
+<span class=nv>pytest</span><span class=o>==</span>7.0.1
+  - atomicwrites <span class=o>[</span>required: &gt;<span class=o>=</span>1.0, installed: 1.4.0<span class=o>]</span>
+  - attrs <span class=o>[</span>required: &gt;<span class=o>=</span>19.2.0, installed: 21.4.0<span class=o>]</span>
+  - colorama <span class=o>[</span>required: Any, installed: 0.4.4<span class=o>]</span>
+  - iniconfig <span class=o>[</span>required: Any, installed: 1.1.1<span class=o>]</span>
+  - packaging <span class=o>[</span>required: Any, installed: 21.3<span class=o>]</span>
+    - pyparsing <span class=o>[</span>required: &gt;<span class=o>=</span>2.0.2,!<span class=o>=</span>3.0.5, installed: 3.0.7<span class=o>]</span>
+  - pluggy <span class=o>[</span>required: &gt;<span class=o>=</span>0.12,&lt;2.0, installed: 1.0.0<span class=o>]</span>
+  - py <span class=o>[</span>required: &gt;<span class=o>=</span>1.8.2, installed: 1.11.0<span class=o>]</span>
+  - tomli <span class=o>[</span>required: &gt;<span class=o>=</span>1.0.0, installed: 2.0.1<span class=o>]</span>
+<span class=nv>requests</span><span class=o>==</span>2.27.1
+  - certifi <span class=o>[</span>required: &gt;<span class=o>=</span>2017.4.17, installed: 2021.10.8<span class=o>]</span>
+  - charset-normalizer <span class=o>[</span>required: ~<span class=o>=</span>2.0.0, installed: 2.0.12<span class=o>]</span>
+  - idna <span class=o>[</span>required: &gt;<span class=o>=</span>2.5,&lt;4, installed: 3.3<span class=o>]</span>
+  - urllib3 <span class=o>[</span>required: &gt;<span class=o>=</span>1.21.1,&lt;1.27, installed: 1.26.8<span class=o>]</span>
+</code></pre></td></tr></table></div></div><p><code>requests</code>的依赖有<code>certifi</code>、<code>charset-normalizer</code>、<code>idna</code>、<code>urllib3</code>，这些信息同样被记录在<code>Pipfile.lock</code>。</p><h2 id=4-版本管理>4 版本管理</h2><p>官方建议：</p><blockquote><p>Generally, keep both Pipfile and Pipfile.lock in version control.</p><p>Do not keep Pipfile.lock in version control if multiple versions of Python are being targeted.</p></blockquote><p>参照<a href=https://github.com/pypa/pipenv/issues/598 target=_blank rel="noopener noreffer">#598</a>。有个观点时<code>Pipfile.lock</code>可以精准控制中间依赖的版本，我参与的项目是将<code>Pipfile.lock</code>一并纳入版本管理。</p><h2 id=5-可修改依赖-如--e-->5 可修改依赖 (如 -e . )</h2><p>你可以让Pipenv以可修改模式安装某个路径，通常用于开发Python包时，安装当前工作目录。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>$ pipenv install --dev -e .
+
+$ cat Pipfile
+<span class=o>[</span>dev-packages<span class=o>]</span>
+<span class=s2>&#34;e1839a8&#34;</span> <span class=o>=</span> <span class=o>{</span><span class=nv>path</span> <span class=o>=</span> <span class=s2>&#34;.&#34;</span>, <span class=nv>editable</span> <span class=o>=</span> true<span class=o>}</span>
+</code></pre></td></tr></table></div></div><p>所有次级依赖也会加到<code>Pipfile.lock</code>中。如果没有加<code>-e</code>选项次级依赖将不会加到<code>Pipfile.lock</code>中。</p><h2 id=6-使用pipenv进行部署>6 使用pipenv进行部署</h2><p>可以用pipenv进行部署，在运行环境中安装<code>Pipfile.lock</code>中得依赖。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>pipenv install --deploy
+pipenv sync
+</code></pre></td></tr></table></div></div><p>相关操作澄清：</p><ul><li><p><code>pipenv install --deploy</code>是直接通过<code>Pipfile.lock</code>安装的，当<code>Pipfile.lock</code>的package版本过时或者python版本不对时，会失败。</p></li><li><p><code>pienv install --deploy</code>和<code>pipenv install</code>的区别在于后者是以<code>Pipfile</code>安装的，如果package未指定版本时或者有新的package，会重新lock生成新的<code>Pipfile.lock</code>。</p></li><li><p><code>pipenv sync</code>是直接根据<code>Pipfile.lock</code>中的依赖版本准确安装。</p></li><li><p><code>pipenv install --ignore-pipfile</code>类似<code>pipenv sync</code>有点类似，只依赖<code>Pipfile.lock</code>。但是前者会re-lock，如<code>Pipfile.lock</code>中的package版本过时，会被更新。</p></li></ul><h2 id=7-pipfile-vs-setuppy>7 Pipfile vs setup.py</h2><p>详见：<a href=https://pipenv-zh.readthedocs.io/zh_CN/latest/advanced.html#pipfile-vs-setup-py target=_blank rel="noopener noreffer">Pipfile vs setup.py</a>。</p><p>可以通过以下命令将<code>setup.py</code>中的相关依赖安装到你的虚拟环境和<code>Pipfile</code>中。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-shell data-lang=shell>pipenv install -e .
+</code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2022-03-05</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=http://huangjingwei.github.io/pipenv_usage/ data-title="Pipenv 的基本使用"><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 百度" data-sharer=baidu data-url=http://huangjingwei.github.io/pipenv_usage/ data-title="Pipenv 的基本使用"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/baidu.svg></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/python/>Python</a></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/google_analytics/ class=prev rel=prev title="Hugo 配置Google Analytics和Search Console"><i class="fas fa-angle-left fa-fw"></i>Hugo 配置Google Analytics和Search Console</a></div></div><div id=comments><div id=valine class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://valine.js.org/>Valine</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2021 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>立青人韦</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><link rel=stylesheet href=/lib/valine/valine.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{"valine":{"appId":"QGzwQXOqs5JOhN4RGPOkR2mR-MdYXbMMI","appKey":"WBmoGyJtbqUswvfLh6L8iEBr","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","pageSize":10,"placeholder":"你的评论 ...","recordIP":true,"serverURLs":"https://leancloud.hugoloveit.com","visitor":true}},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
