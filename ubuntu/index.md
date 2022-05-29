@@ -36,7 +36,7 @@
 
 ## 安装Ubuntu
 
-`Windows`和`Ubuntu`双系统的安装，教程相对齐全。这里着重记录安装系统过程中遇到的坑，会保持更新。
+`Windows`和`Ubuntu`双系统的安装的问题记录。
 
 ### 分区问题
 
@@ -133,15 +133,53 @@ sudo update-grub
 
 ***
 
-### 循环登录问题
+### `init=/bin/bash`内核特性
 
-## 合理上网
+这个特性主要用于恢复系统或者修改密码。
 
+在`GNU GRUB`引导进入系统的是，按`e`进入编辑模式，在`linux`的行尾添加`init=/bin/bash`，然后`F10`启动。
 
+进入系统后可能要读写某个文件，会遇到`Reas-only file system`的情况。可以将上面的命令改为`rw init=/bin/bash`。
+或者：
 
+```shell
+mount -o remount -rw /
+```
+恢复的指令为：
 
+```shell
+mount -o remount -r /
+```
+
+##  科学上网
+
+当然有商业软件VPN，这类产品稳定、支持多平台，但是价格也略高。
+
+机场包括免费分享机场、付费机场订阅和自建机场。
+
+- 免费分享机场不够稳定，质量也参差不齐，时间成本高。
+- 自建机场需要买海外的主机，价格也不便宜，ip也容易被封。
+
+我现在使用的是付费机场云翼，可点击[邀请链接]进入注册。
+
+下图是这个机场提供的订阅方式：
+
+{{< image src="/Ubuntu/ubuntu/proxy.png"  >}}
+
+这里我们使用[clash for Windows]的上网软件，该软件可支持`Windows`、`macOS`、`Linux`系统。
+
+在Releases中下载安装包，`Ubuntu`系统下载tag.gz即可，但是`v0.19.18`有[gnome-shell内存泄漏]，要避免使用该版本。
+
+下载完成解压，并在解压路径下运行`./cfw`运行软件。
+
+在机场中复制Clash_V2Ray订阅链接，并粘贴到`clash for Windows`的【Profiles】的下载位置下载节点列表。
+
+这样就可以科学上网了。
 
 [Why do I need to replace "quiet splash" with "nomodeset"?]: https://askubuntu.com/questions/1024895/why-do-i-need-to-replace-quiet-splash-with-nomodeset
+[邀请链接]:https://yypro.net/auth/register?code=5z3c
+[clash for Windows]:https://github.com/Fndroid/clash_for_windows_pkg
+[gnome-shell内存泄漏]:https://github.com/Fndroid/clash_for_windows_pkg/issues/3029
 
 
 
