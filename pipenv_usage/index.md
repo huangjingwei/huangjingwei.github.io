@@ -1,12 +1,12 @@
 # Pipenv 的基本使用
 
 
-{{< image src="/python/pipenv_usage/pipenv.jpg"  >}}
-
-
-## 1 pipenv 安装
+{{< image src="/python/pipenv_usage/pipenv-half.jpg"  >}}
 
 Pipenv是Python项目的依赖管理器。尽管pip可以安装Python包，但仍推荐使用Pipenv，因为它是一种更高级的工具，可简化依赖关系管理的常见使用情况。
+<!--more-->
+
+## 1 pipenv 安装
 
 使用pip安装：
 ```shell
