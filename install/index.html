@@ -1,0 +1,285 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>Kubernetes 安装 - Wally's craft</title><meta name=Description content="关于 LoveIt 主题"><meta property="og:title" content="Kubernetes 安装"><meta property="og:description" content="安装kubeadm三件套 三件套： kubeadm：用来初始化集群的指令。 kubelet：运行在集群节点上的组件。 kubectl：和集群交互的C"><meta property="og:type" content="article"><meta property="og:url" content="https://huangjingwei.github.io/install/"><meta property="og:image" content="https://huangjingwei.github.io/logo.png"><meta property="article:published_time" content="2022-08-14T09:02:07+00:00"><meta property="article:modified_time" content="2022-08-14T09:02:07+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://huangjingwei.github.io/logo.png"><meta name=twitter:title content="Kubernetes 安装"><meta name=twitter:description content="安装kubeadm三件套 三件套： kubeadm：用来初始化集群的指令。 kubelet：运行在集群节点上的组件。 kubectl：和集群交互的C"><meta name=application-name content="LoveIt"><meta name=apple-mobile-web-app-title content="LoveIt"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://huangjingwei.github.io/install/><link rel=prev href=https://huangjingwei.github.io/vscode/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Kubernetes 安装","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/huangjingwei.github.io\/install\/"},"image":["https:\/\/huangjingwei.github.io\/images\/Apple-Devices-Preview.png"],"genre":"posts","keywords":"Kubernetes","wordcount":1420,"url":"https:\/\/huangjingwei.github.io\/install\/","datePublished":"2022-08-14T09:02:07+00:00","dateModified":"2022-08-14T09:02:07+00:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"立青人韦","logo":"https:\/\/huangjingwei.github.io\/images\/avatar.png"},"author":{"@type":"Person","name":"立青人韦"},"description":""}</script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-221439596-1"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','UA-221439596-1');</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('dark'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'dark'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Wally's craft">Wally's craft</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>所有文章 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=搜索文章标题或内容... id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Wally's craft">Wally's craft</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容... id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>所有文章</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">Kubernetes 安装</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>立青人韦</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/kubernetes/><i class="far fa-folder fa-fw"></i>Kubernetes</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime=2022-08-14>2022-08-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1420 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#安装kubeadm三件套>安装kubeadm三件套</a><ul><li><a href=#官方源安装>官方源安装</a></li><li><a href=#国内源安装>国内源安装</a></li></ul></li><li><a href=#禁用swap>禁用swap</a></li><li><a href=#创建集群>创建集群</a></li><li><a href=#kuberneres-v124-适配docker>Kuberneres v1.24 适配docker</a><ul><li><a href=#安装cri-dockerd>安装cri-dockerd</a></li><li><a href=#修改kubeadm配置>修改kubeadm配置</a></li></ul></li><li><a href=#配置kubectl客户端>配置kubectl客户端</a></li><li><a href=#网络插件配置>网络插件配置</a><ul><li><a href=#安装flannel>安装flannel</a></li><li><a href=#检查podcidr配置>检查podCIDR配置</a></li></ul></li><li><a href=#master-节点默认不能运行-pod>master 节点默认不能运行 pod</a></li></ul></nav></div></div><div class=content id=content><h2 id=安装kubeadm三件套>安装kubeadm三件套</h2><p>三件套：</p><ul><li>kubeadm：用来初始化集群的指令。</li><li>kubelet：运行在集群节点上的组件。</li><li>kubectl：和集群交互的CLI客户端。</li></ul><h3 id=官方源安装>官方源安装</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>sudo apt-get update <span class=o>&amp;&amp;</span> sudo apt-get install -y apt-transport-https curl
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg <span class=p>|</span> sudo apt-key add -
+cat <span class=s>&lt;&lt;EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
+</span><span class=s>deb https://apt.kubernetes.io/ kubernetes-xenial main
+</span><span class=s>EOF</span>
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl <span class=c1>#固定其版本</span>
+</code></pre></td></tr></table></div></div><p>参考<a href=https://kubernetes.io/fr/docs/setup/production-environment/tools/kubeadm/install-kubeadm/ target=_blank rel="noopener noreffer">官方安装教材法文版</a>。</p><h3 id=国内源安装>国内源安装</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>cat <span class=s>&lt;&lt;EOF &gt; /etc/apt/sources.list.d/kubernetes.list
+</span><span class=s>deb http://mirrors.ustc.edu.cn/kubernetes/apt kubernetes-xenial main
+</span><span class=s>EOF</span>
+
+sudo apt-get update
+</code></pre></td></tr></table></div></div><p>添加源之后，执行 apt-get update报错。原因是没有公钥，无法验证签名。添加操作可以执行下面的命令，命令中的<code>BA07F4FB</code>为报错信息中提示的缺失公钥的后8位。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>gpg --keyserver keyserver.ubuntu.com --recv-keys  BA07F4FB
+gpg --export --armor E084DAB9 <span class=p>|</span> sudo apt-key add -
+</code></pre></td></tr></table></div></div><p>安装</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>sudo apt-get install -y kubectl kubeadm kubectl
+</code></pre></td></tr></table></div></div><h2 id=禁用swap>禁用swap</h2><p>如果在安装系统的时候分配了<code>swap</code>。需要将其关闭。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>sudo swapoff -a
+
+<span class=c1>#查看</span>
+free -h
+</code></pre></td></tr></table></div></div><h2 id=创建集群>创建集群</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>kubeadm config images pull <span class=c1>#pull Google提供的相关镜像。</span>
+sudo kubeadm init <span class=c1>#初始化并创建Kubernetes集群。</span>
+</code></pre></td></tr></table></div></div><p>如果是国内的网络，镜像拉取会失败。</p><ul><li>配置代理拉取google镜像：<a href=../docker_proxy/#dockerd%e4%bb%a3%e7%90%86%e9%85%8d%e7%bd%ae rel>dockerd代理配置</a></li><li>使用阿里的镜像：<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>kubeadm config image pull --image-repository<span class=o>=</span>registry.cn-hangzhou.aliyuncs.com/google_containers
+</code></pre></td></tr></table></div></div></li></ul><h2 id=kuberneres-v124-适配docker>Kuberneres v1.24 适配docker</h2><p>在Kubernetes v1.24及更早版本中，依然可以通过dockershim来使用Docker Engine。
+但是dockershim组件在Kubernetes v1.24发行版本中已被移除。
+不过，可以通过配置<a href=https://kubernetes.io/zh-cn/docs/concepts/overview/components/#container-runtime target=_blank rel="noopener noreffer">容器运行时接口CRI</a>使用<a href=https://github.com/Mirantis/cri-dockerd target=_blank rel="noopener noreffer">cri-dockerd</a>。</p><h3 id=安装cri-dockerd>安装cri-dockerd</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.2.5/cri-dockerd_0.2.5.3-0.ubuntu-jammy_amd64.deb
+sudo dpkg -i cri-dockerd_0.2.5.3-0.ubuntu-jammy_amd64.deb
+</code></pre></td></tr></table></div></div><p>推荐在Release中找到最新版本下载安装。</p><h3 id=修改kubeadm配置>修改kubeadm配置</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>$ kubeadm config print init-defaults 
+
+apiVersion: kubeadm.k8s.io/v1beta3
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 1.2.3.4
+  bindPort: <span class=m>6443</span>
+nodeRegistration:
+  criSocket: unix:///var/run/containerd/containerd.sock
+  imagePullPolicy: IfNotPresent
+  name: node
+  taints: null
+---
+apiServer:
+  timeoutForControlPlane: 4m0s
+apiVersion: kubeadm.k8s.io/v1beta3
+certificatesDir: /etc/kubernetes/pki
+clusterName: kubernetes
+controllerManager: <span class=o>{}</span>
+dns: <span class=o>{}</span>
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+imageRepository: k8s.gcr.io
+kind: ClusterConfiguration
+kubernetesVersion: 1.24.0
+networking:
+  dnsDomain: cluster.local
+  serviceSubnet: 10.96.0.0/12
+scheduler: <span class=o>{}</span>
+</code></pre></td></tr></table></div></div><p>将以上配置文件写入文件，并修改其内容。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>kubeadm config print init-defaults &gt; init.yaml
+
+<span class=c1># 修改init.yaml:</span>
+
+apiVersion: kubeadm.k8s.io/v1beta3
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 192.168.3.6 <span class=c1>#本机ip</span>
+  bindPort: <span class=m>6443</span>
+nodeRegistration:
+  criSocket: unix:///run/cri-dockerd.sock <span class=c1>#改成cri-dockerd</span>
+  imagePullPolicy: IfNotPresent
+  name: walle <span class=c1>#本机hostname</span>
+  taints: null
+---
+apiServer:
+  timeoutForControlPlane: 4m0s
+apiVersion: kubeadm.k8s.io/v1beta3
+certificatesDir: /etc/kubernetes/pki
+clusterName: kubernetes
+controllerManager: <span class=o>{}</span>
+dns: <span class=o>{}</span>
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+imageRepository: k8s.gcr.io <span class=c1># 这里也可以改成阿里的惊喜</span>
+kind: ClusterConfiguration
+kubernetesVersion: 1.24.0
+networking:
+  dnsDomain: cluster.local
+  serviceSubnet: 10.172.0.0/12
+  podSubnet: 10.244.0.0/16 <span class=c1># --pod-network-cidr Specify range of IP addresses for the pod network. If set, the control plane will automatically allocate CIDRs for every node.</span>
+
+scheduler: <span class=o>{}</span>
+
+sudo kubeadm init --config init.yaml 
+<span class=c1># 如果在命令后面指定--pod-network-cidr则会报“can not mix &#39;--config&#39; with arguments [pod-network-cidr]“，参考：https://github.com/kubernetes/kubeadm/issues/1899</span>
+</code></pre></td></tr></table></div></div><h2 id=配置kubectl客户端>配置kubectl客户端</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>mkdir -p <span class=nv>$HOME</span>/.kube
+sudo cp -i /etc/kubernetes/admin.conf <span class=nv>$HOME</span>/.kube/config
+sudo chown <span class=k>$(</span>id -u<span class=k>)</span>:<span class=k>$(</span>id -g<span class=k>)</span> <span class=nv>$HOME</span>/.kube/config
+</code></pre></td></tr></table></div></div><p>配置完，<code>kubectl</code>在当前用户就可以用了。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>$ kubectl --namespace<span class=o>=</span>kube-system get pods
+NAME                            READY   STATUS              RESTARTS   AGE
+coredns-6d4b75cb6d-lvct9        1/1     ContainerCreating   <span class=m>0</span>          31s
+coredns-6d4b75cb6d-zpwcc        1/1     ContainerCreating   <span class=m>0</span>          31s
+etcd-walle                      1/1     Running             <span class=m>0</span>          31s
+kube-apiserver-walle            1/1     Running             <span class=m>0</span>          31s
+kube-controller-manager-walle   1/1     Running             <span class=m>0</span>          31s
+kube-proxy-rbgzm                1/1     Running             <span class=m>0</span>          31s
+kube-scheduler-walle            1/1     Running             <span class=m>0</span>          31s
+</code></pre></td></tr></table></div></div><p>在未配置网络插件（CNI Plugin）时，可以发现coredns是无法启动的。</p><h2 id=网络插件配置>网络插件配置</h2><p>如果之前安装过其他的插件，需要先清理配置：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>sudo rm -f /etc/cni/net.d/*
+</code></pre></td></tr></table></div></div><h3 id=安装flannel>安装flannel</h3><p>执行命令安装<code>flannel</code>：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
+</code></pre></td></tr></table></div></div><p>安装后所有的Pod都正常启动</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>$ kubectl --namespace<span class=o>=</span>kube-system get pods
+NAME                            READY   STATUS    RESTARTS   AGE
+coredns-6d4b75cb6d-lvct9        1/1     Running   <span class=m>0</span>          9h
+coredns-6d4b75cb6d-zpwcc        1/1     Running   <span class=m>0</span>          9h
+etcd-walle                      1/1     Running   <span class=m>0</span>          9h
+kube-apiserver-walle            1/1     Running   <span class=m>0</span>          9h
+kube-controller-manager-walle   1/1     Running   <span class=m>0</span>          9h
+kube-proxy-rbgzm                1/1     Running   <span class=m>0</span>          9h
+kube-scheduler-walle            1/1     Running   <span class=m>0</span>          9h
+</code></pre></td></tr></table></div></div><h3 id=检查podcidr配置>检查podCIDR配置</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>$ kubectl get node -o yaml <span class=p>|</span> grep CIDR
+    podCIDR: 10.244.0.0/24
+    podCIDRs:
+</code></pre></td></tr></table></div></div><h2 id=master-节点默认不能运行-pod>master 节点默认不能运行 pod</h2><p>如果用 kubeadm 部署一个单节点集群，默认情况下无法使用，请执行以下命令解除限制</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>$ kubectl taint nodes --all node-role.kubernetes.io/master-
+
+<span class=c1># 恢复默认值</span>
+<span class=c1># $ kubectl taint nodes NODE_NAME node-role.kubernetes.io/master=true:NoSchedule</span>
+</code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2022-08-14</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://huangjingwei.github.io/install/ data-title="Kubernetes 安装"><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 百度" data-sharer=baidu data-url=https://huangjingwei.github.io/install/ data-title="Kubernetes 安装"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/baidu.svg></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/kubernetes/>Kubernetes</a></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/vscode/ class=prev rel=prev title="Vscode 安装"><i class="fas fa-angle-left fa-fw"></i>Vscode 安装</a></div></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2021 - 2022</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>立青人韦</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><script type=text/javascript src=https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":20},"comment":{},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.zh-cn","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
