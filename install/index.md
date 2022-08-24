@@ -45,6 +45,16 @@ gpg --export --armor E084DAB9 | sudo apt-key add -
 sudo apt-get install -y kubectl kubeadm kubectl
 ```
 
+### 命令自动补全
+
+```sh
+kubectl completion bash > kubectl
+sudo mv kubectl /etc/bash_completion.d/
+
+kubeadm completion bash > kubeadm
+sudo mv kubeadm /etc/bash_completion.d/
+```
+
 ## 禁用swap
 
 如果在安装系统的时候分配了`swap`。需要将其关闭。
