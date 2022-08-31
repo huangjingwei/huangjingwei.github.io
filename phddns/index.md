@@ -73,7 +73,7 @@ $ phddns status
 确认映射内容无误后，点击“确定”。
 
 
-{{< image src="/Ubuntu/phddns/port-mapping.png"  >}} 
+{{< image src="/Ubuntu/phddns/port-mapping.png"  >}}
 
 {{< admonition tip "Tip" true >}}
 查看当前的ubuntu是否安装了ssh-server服务。默认只安装ssh-client服务。
@@ -94,6 +94,67 @@ HTTP映射和TCP映射大同小异，只不过要向平台缴费`￥6`，然后�
 建议端口号用默认的就可以，然后内网ip和端口按实际的填写。可以开启限制访问。
 
 {{< image src="/Ubuntu/phddns/oder.png"  >}}
+
+## 远程桌面
+
+以Windows远程Ubuntu桌面为例。
+
+Windows的mstsc远程桌面支持远程桌面协议 (RDP)，
+Xrdp是一个开源工具，允许用户通过Windows RDP访问Linux远程桌面。
+
+Ubuntu按照xrdp：
+
+```sh
+$ sudo apt install xrdp
+$ sudo systemctl enable xrdp
+$ sudo adduser xrdp ssl-cert
+$ sudo systrmctl restart xrdp
+```
+xrdp默认使用`/etc/ssl/private/ssl-cert-snakeoil.key`，该文件`ssl-cert`组里的用户是只读的。
+
+{{< admonition tip "Tip" true >}}
+在远程桌面前，最好退出其他有在登录的用户，避免黑屏。
+{{< /admonition >}}
+
+```sh
+$ sudo systemctl status xrdp
+● xrdp.service - xrdp daemon
+     Loaded: loaded (/lib/systemd/system/xrdp.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2022-08-31 22:47:17 CST; 2s ago
+       Docs: man:xrdp(8)
+             man:xrdp.ini(5)
+    Process: 17618 ExecStartPre=/bin/sh /usr/share/xrdp/socksetup (code=exited, status=0/SUCCESS)
+    Process: 17626 ExecStart=/usr/sbin/xrdp $XRDP_OPTIONS (code=exited, status=0/SUCCESS)
+   Main PID: 17627 (xrdp)
+      Tasks: 1 (limit: 38360)
+     Memory: 872.0K
+        CPU: 11ms
+     CGroup: /system.slice/xrdp.service
+             └─17627 /usr/sbin/xrdp
+
+8月 31 22:47:16 walle systemd[1]: Starting xrdp daemon...
+8月 31 22:47:16 walle xrdp[17626]: [INFO ] address [0.0.0.0] port [3389] mode 1
+8月 31 22:47:16 walle xrdp[17626]: [INFO ] listening to port 3389 on 0.0.0.0
+8月 31 22:47:16 walle xrdp[17626]: [INFO ] xrdp_listen_pp done
+8月 31 22:47:16 walle systemd[1]: xrdp.service: Can't open PID file /run/xrdp/xrdp.pid (yet?) after start: Operation not permitted
+8月 31 22:47:17 walle systemd[1]: Started xrdp daemon.
+8月 31 22:47:18 walle xrdp[17627]: [INFO ] starting xrdp with pid 17627
+8月 31 22:47:18 walle xrdp[17627]: [INFO ] address [0.0.0.0] port [3389] mode 1
+8月 31 22:47:18 walle xrdp[17627]: [INFO ] listening to port 3389 on 0.0.0.0
+8月 31 22:47:18 walle xrdp[17627]: [INFO ] xrdp_listen_pp done
+```
+
+由此可以看出，xrdp的默认端口是3389。花生壳上添加tcp的映射方式，内网端口就是xrdp的端口号。
+
+xrdp在局域网中可以延时很低，但是在通过花生壳在公网中访问会非常卡顿。
+
+这里有个临时解决方案：
+
+在Windows远程桌面时，选择显示选项：
+
+- 体验 -> 选择链接速度来优化性能（调制解调器56Kbps。
+- 显示 -> 选择桌面的大小（1024×768。
+
 
 ## 总结
 
