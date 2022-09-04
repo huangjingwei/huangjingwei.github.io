@@ -58,7 +58,7 @@ free -h
 </span><span class=lnt>2
 </span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>kubeadm config images pull <span class=c1>#pull Google提供的相关镜像。</span>
 sudo kubeadm init <span class=c1>#初始化并创建Kubernetes集群。</span>
-</code></pre></td></tr></table></div></div><p>如果是国内的网络，镜像拉取会失败。</p><ul><li>配置代理拉取google镜像：<a href=../docker_proxy/#dockerd%e4%bb%a3%e7%90%86%e9%85%8d%e7%bd%ae rel>dockerd代理配置</a></li><li>使用阿里的镜像：<div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</code></pre></td></tr></table></div></div><p>如果是国内的网络，镜像拉取会失败。</p><ul><li><p>配置代理拉取google镜像：<a href=../docker_proxy/#dockerd%e4%bb%a3%e7%90%86%e9%85%8d%e7%bd%ae rel>dockerd代理配置</a></p></li><li><p>使用阿里的镜像：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
 </span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>kubeadm config image pull --image-repository<span class=o>=</span>registry.cn-hangzhou.aliyuncs.com/google_containers
 </code></pre></td></tr></table></div></div></li></ul><h2 id=kuberneres-v124-适配docker>Kuberneres v1.24 适配docker</h2><p>在Kubernetes v1.24及更早版本中，依然可以通过dockershim来使用Docker Engine。
 但是dockershim组件在Kubernetes v1.24发行版本中已被移除。

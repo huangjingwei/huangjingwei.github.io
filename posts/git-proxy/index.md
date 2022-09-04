@@ -10,7 +10,6 @@ git下载代码的时候可以通过https或ssh。有时候拉取GitHub上的代
 - https：账号和密码认证。
 - ssh：证书认证。
 
-
 ### HTTPS
 
 ```Bash
@@ -20,7 +19,7 @@ git config --global https.proxy "http://127.0.0.1:3128"
 
 以上配置生效会在用户目录下的`.gitconfig`文件中体现。
 
-```
+```config
 [user]
         name = huangjingwei
         email = example.com
@@ -28,7 +27,6 @@ git config --global https.proxy "http://127.0.0.1:3128"
         proxy = http://127.0.0.1:3128
 [https]
         proxy = http://127.0.0.1:3128
-
 ```
 
 ### SSH

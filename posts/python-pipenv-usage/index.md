@@ -9,8 +9,9 @@ Pipenv是Python项目的依赖管理器。尽管pip可以安装Python包，但�
 ## 1 pipenv 安装
 
 使用pip安装：
+
 ```shell
-$ pip install --user pipenv
+pip install --user pipenv
 ```
 
 `--user`代表[用户安装模式]，以防止破坏任何系统范围的包。
@@ -35,6 +36,7 @@ pienv --python 3.8
 
 Warning: Python 3.8 was not found on your system...
 ```
+
 ### pipenv --three / --two
 
 或者指定`Python 3/2`创建虚拟环境：
@@ -87,6 +89,7 @@ name = "pypi"
 [requires]
 python_version = "3.10"
 ```
+
 基于`pipenv install`会多出一个`Pipfile.lock`:
 
 ```json
@@ -120,6 +123,7 @@ pipenv install pytest --dev
 ```
 
 `Pipfile`自动更新：
+
 ```toml
 [[source]]
 url = "https://pypi.org/simple"
@@ -204,6 +208,7 @@ python_version = "3.10"
 `Pipfile.lock`会生成所有已下载包的sha256哈希值(包括中间依赖)。这使得pip在不安全网络情况下，保证你安装了你想要的包，或者从一个不信任的PyPI源下载依赖.
 
 查看依赖：
+
 ```shell
 $ pipenv graph       
 pytest==7.0.1
@@ -230,7 +235,7 @@ requests==2.27.1
 官方建议：
 
 > Generally, keep both Pipfile and Pipfile.lock in version control.
-> 
+>
 > Do not keep Pipfile.lock in version control if multiple versions of Python are being targeted.
 
 参照[#598]。有个观点时`Pipfile.lock`可以精准控制中间依赖的版本，我参与的项目是将`Pipfile.lock`一并纳入版本管理。
@@ -257,6 +262,7 @@ $ cat Pipfile
 pipenv install --deploy
 pipenv sync
 ```
+
 相关操作澄清：
 
 - `pipenv install --deploy`是直接通过`Pipfile.lock`安装的，当`Pipfile.lock`的package版本过时或者python版本不对时，会失败。
@@ -277,10 +283,8 @@ pipenv sync
 pipenv install -e .
 ```
 
-
 [用户安装模式]:https://pip.pypa.io/en/stable/user_guide/#user-installs
 [用户基础目录]:https://docs.python.org/3/library/site.html#site.USER_BASE
 [#598]: https://github.com/pypa/pipenv/issues/598
 [Pipfile vs setup.py]:https://pipenv-zh.readthedocs.io/zh_CN/latest/advanced.html#pipfile-vs-setup-py
-
 

@@ -72,18 +72,21 @@ $ phddns status
 
 确认映射内容无误后，点击“确定”。
 
-
 {{< image src="/Ubuntu/phddns/port-mapping.png"  >}}
 
 {{< admonition tip "Tip" true >}}
 查看当前的ubuntu是否安装了ssh-server服务。默认只安装ssh-client服务。
+
 ```shell
 dpkg -l | grep ssh
 ```
+
 如果没有`openssh-server`，安装：
+
 ```shell
 sudo apt-get install openssh-server
 ```
+
 {{< /admonition >}}
 
 这样在外网的电脑上，打开连接SSH服务的工具程序，输入域名与外网端口号就可以访问了。
@@ -105,11 +108,12 @@ Xrdp是一个开源工具，允许用户通过Windows RDP访问Linux远程桌面
 Ubuntu按照xrdp：
 
 ```sh
-$ sudo apt install xrdp
-$ sudo systemctl enable xrdp
-$ sudo adduser xrdp ssl-cert
-$ sudo systrmctl restart xrdp
+sudo apt install xrdp
+sudo systemctl enable xrdp
+sudo adduser xrdp ssl-cert
+sudo systrmctl restart xrdp
 ```
+
 xrdp默认使用`/etc/ssl/private/ssl-cert-snakeoil.key`，该文件`ssl-cert`组里的用户是只读的。
 
 {{< admonition tip "Tip" true >}}
@@ -155,7 +159,6 @@ xrdp在局域网中可以延时很低，但是在通过花生壳在公网中访�
 - 体验 -> 选择链接速度来优化性能（调制解调器56Kbps。
 - 显示 -> 选择桌面的大小（1024×768。
 
-
 ## 总结
 
 对于个人用户，部署友好，3步创建映射，一键内网穿透无需公网IP，无需搭建专线。
@@ -166,11 +169,9 @@ xrdp在局域网中可以延时很低，但是在通过花生壳在公网中访�
 
 尊重产权，适当氪金。
 
-
 ## 附录
 
 [花生壳5.0 for Linux使用教程]
-
 
 [花生壳5.0 for Linux使用教程]:https://service.oray.com/question/11630.html
 [注册帐号]:https://console.oray.com/passport/register.html?fromurl=https%3A%2F%2Fwww.oray.com%2Fannouncements%2Faffiche%2F%3Faid%3D793%253Ficn%253Dupdate%26ici%3Dsl_oray_banner&saSDKMultilink=true

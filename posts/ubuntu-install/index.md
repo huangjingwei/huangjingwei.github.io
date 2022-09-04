@@ -33,7 +33,6 @@
 
 这时候，可以在BIOS改变下启动次序，优先启动`Windows`系统，然后进去再按照上述操作把残留的`Ubuntu`系统引导工具删去。
 
-
 ## 安装Ubuntu
 
 `Windows`和`Ubuntu`双系统的安装的问题记录。
@@ -72,26 +71,26 @@ free -h
 但是有的卡就是不行，所以伺候你一个黑屏。
 
 >**nomodeset**
-> 
+>
 >The newest kernels have moved the video mode setting into the kernel.
 > So all the programming of the hardware specific clock rates and registers on the video card happen in the kernel rather than in the X driver when the X server starts.
-> This makes it possible to have high resolution nice looking splash (boot) screens and flicker free transitions from boot splash to login screen. 
+> This makes it possible to have high resolution nice looking splash (boot) screens and flicker free transitions from boot splash to login screen.
 > Unfortunately, on some cards this doesnt work properly and you end up with a black screen.
 > Adding the nomodeset parameter instructs the kernel to not load video drivers and use BIOS modes instead until X is loaded.
-> 
+>
 >Note that this option is sometimes needed for nVidia cards when using the default "nouveau" drivers.
-> Installing proprietary nvidia drivers usually makes this option no longer necessary, 
+> Installing proprietary nvidia drivers usually makes this option no longer necessary,
 > so it may not be needed to make this option permanent, just for one boot until you installed the nvidia
 >
 >**quiet**
-> 
+>
 >This option tells the kernel to NOT produce any output (a.k.a. Non verbose mode).
 > If you boot without this option, you'll see lots of kernel messages such as drivers/modules activations,
 > filesystem checks and errors. Not having the quiet parameter may be useful when you need to find an
 >
 >**splash**
-> 
->This option is used to start an eye-candy "loading" screen while all the core parts of the system are loaded in the background. 
+>
+>This option is used to start an eye-candy "loading" screen while all the core parts of the system are loaded in the background.
 > If you disable it and have quiet enable you'll get a blank screen.
 
 参考[Why do I need to replace "quiet splash" with "nomodeset"?]
@@ -118,17 +117,18 @@ free -h
 
 进去系统之后编辑`/etc/default/grub`(要管理者权限sudo)。
 
-
 在`GRUB_CMDLINE_LINUX_DEFAULT`中添加`nomodeset`。如下：
 
 ```yaml
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash nomodeset"
 ```
 
-更新GRUB： 
+更新GRUB：
+
 ```shell
 sudo update-grub
 ```
+
 然后重启。
 
 ***
@@ -145,13 +145,14 @@ sudo update-grub
 ```shell
 mount -o remount -rw /
 ```
+
 恢复的指令为：
 
 ```shell
 mount -o remount -r /
 ```
 
-##  科学上网
+## 科学上网
 
 当然有商业软件VPN，这类产品稳定、支持多平台，但是价格也略高。
 
@@ -180,6 +181,4 @@ mount -o remount -r /
 [邀请链接]:https://yypro.net/auth/register?code=5z3c
 [clash for Windows]:https://github.com/Fndroid/clash_for_windows_pkg
 [gnome-shell内存泄漏]:https://github.com/Fndroid/clash_for_windows_pkg/issues/3029
-
-
 

@@ -2,6 +2,7 @@
 
 
 ## 安装kubeadm三件套
+
 三件套：
 
 - kubeadm：用来初始化集群的指令。
@@ -20,6 +21,7 @@ sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl #固定其版本
 ```
+
 参考[官方安装教材法文版]。
 
 ### 国内源安装
@@ -58,6 +60,7 @@ sudo mv kubeadm /etc/bash_completion.d/
 ## 禁用swap
 
 如果在安装系统的时候分配了`swap`。需要将其关闭。
+
 ```sh
 sudo swapoff -a
 
@@ -76,6 +79,7 @@ sudo kubeadm init #初始化并创建Kubernetes集群。
 
 - 配置代理拉取google镜像：[dockerd代理配置](../docker_proxy/#dockerd代理配置)
 - 使用阿里的镜像：
+
     ```sh
     kubeadm config image pull --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers
     ```
@@ -86,13 +90,13 @@ sudo kubeadm init #初始化并创建Kubernetes集群。
 但是dockershim组件在Kubernetes v1.24发行版本中已被移除。
 不过，可以通过配置[容器运行时接口CRI]使用[cri-dockerd]。
 
-
 ### 安装cri-dockerd
 
 ```sh
 wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.2.5/cri-dockerd_0.2.5.3-0.ubuntu-jammy_amd64.deb
 sudo dpkg -i cri-dockerd_0.2.5.3-0.ubuntu-jammy_amd64.deb
 ```
+
 推荐在Release中找到最新版本下载安装。
 
 ### 修改kubeadm配置
@@ -209,11 +213,13 @@ kube-controller-manager-walle   1/1     Running             0          31s
 kube-proxy-rbgzm                1/1     Running             0          31s
 kube-scheduler-walle            1/1     Running             0          31s
 ```
+
 在未配置网络插件（CNI Plugin）时，可以发现coredns是无法启动的。
 
 ## 网络插件配置
 
 如果之前安装过其他的插件，需要先清理配置：
+
 ```sh
 sudo rm -f /etc/cni/net.d/*
 ```
@@ -221,6 +227,7 @@ sudo rm -f /etc/cni/net.d/*
 ### 安装flannel
 
 执行命令安装`flannel`：
+
 ```sh
 kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
 ```
@@ -261,3 +268,4 @@ $ kubectl taint nodes --all node-role.kubernetes.io/master-
 [官方安装教材法文版]:https://kubernetes.io/fr/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 [容器运行时接口CRI]:https://kubernetes.io/zh-cn/docs/concepts/overview/components/#container-runtime
 [cri-dockerd]:https://github.com/Mirantis/cri-dockerd
+
