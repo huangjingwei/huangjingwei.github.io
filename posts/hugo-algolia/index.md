@@ -31,7 +31,7 @@ npm install hugo-algolia -g
 
 安装完成后，在我们hugo生产的静态页面的根目录下面新建一个`config.yaml`的文件(和`config.toml`同级)，然后在`config.yaml`文件中指定Algolia相关的API数据。
 
-```toml
+```yaml
 ---
 baseurl: "blog.huangjingwei.site"
 DefaultContentLanguage: "zh-cn"
@@ -57,7 +57,7 @@ JSON index file was created in public/algolia.json
 { updatedAt: '2018-02-23T02:36:09.480Z', taskID: 249063848950 }
 ```
 
-然后我们可以看到，上面命令执行完成后会在`public`目录下面生成一个`algolia.json`的文件。打开`Indices`，可以看到已经有几十条数据了。
+然后我们可以看到，上面命令执行完成后会在`public`目录下面生成一个`algolia.json`的文件。在[官方网站]打开`Indices`，可以看到已经有几十条数据了。
 
 如果某篇文章不想被索引的话，我们只需要在文件的最前面设置index参数为false即可，`hugo-algolia`插件在索引的过程中会自动跳过它。
 
