@@ -29,20 +29,21 @@ Registry的授权方案是基于OAuth2.0的密码模式。
 
 ### Query Parameters
 
-service：（neccessary）授权服务的标识，表示要向谁请求token
-scope：（neccessary）
-client-id：（optinal）请求token的客户端id，比如docker-daemon发起的请求会将该字段设置为docker。
+- service：（neccessary）授权服务的标识，表示要向谁请求token
+- scope：（neccessary）
+- client-id：（optinal）请求token的客户端id，比如docker-daemon发起的请求会将该字段设置为docker。
 
 ### Header Parameters
 
-Authorization：（optional）携带的用户信息
+- uthorization：（optional）携带的用户信息
 
 ### Response Body
 
-响应body为一个json，有三个字段
-token：（neccessary）授权服务器返回的带有授权信息的token。
-issued_at：（optional）token的签发时间，UTC标准时间格式。
-expires_in：（optional）token在多少秒以后过期，如果没有说明则默认为60秒。
+响应body为一个json，有三个字段:
+
+- token：（neccessary）授权服务器返回的带有授权信息的token。
+- issued_at：（optional）token的签发时间，UTC标准时间格式。
+- expires_in：（optional）token在多少秒以后过期，如果没有说明则默认为60秒。
 
 ### 示例
 
@@ -60,6 +61,7 @@ $ curl 192.168.1.103:8021/service/token?service=token-service\&scope=repository:
 
 ```sh
 $ curl -H "Authorization: Basic YWRtaW46SGFyYm9yMTIzNDU=" 192.168.1.103:8021/service/token?service=token-service\&scope=repository:library/registry:pull\&client_id=curl
+
 其中YWRtaW46SGFyYm9yMTIzNDU=是admin:Harbor12345的base64编码
 ```
 
@@ -81,17 +83,24 @@ Header有三个字段：
 - alg：签名算法，常用的有HS256、RS256等
 - kid：key-id，签名算法中所使用的密钥的ID值
 
-kid的生成有以下三个步骤
+kid的生成有以下三个步骤:
+
 1、从签名算法使用的密钥中得到DER编码格式的公钥（public key
+
 2、对DER格式的公钥做sha256哈希，取前240bit
+
 3、将这240bit使用base32编码，然后四个一组使用冒号:分隔
 
-如下是Header的一个例子
+如下是Header的一个例子:
+
+```json
 {
     "typ": "JWT",
     "alg": "RS256",
     "kid"："HM66:6CXS:ZBPQ:MD5Z:BRYU:STOD:CBPK:RNNF:X7EC:FLQL:LSE2:KQKS"
 }
+```
+
 生成kid的详细例子见本文末尾的扩展阅读。
 
 ### Payload
@@ -140,7 +149,11 @@ payload的样例如下：
 对header内容去掉空白字符后得到：
 
 ```sh
-{"typ":"JWT","alg":"RS256","kid":"HM66:6CXS:ZBPQ:MD5Z:BRYU:STOD:CBPK:RNNF:X7EC:FLQL:LSE2:KQKS"}
+{
+  "typ":"JWT",
+  "alg":"RS256",
+  "kid":"HM66:6CXS:ZBPQ:MD5Z:BRYU:STOD:CBPK:RNNF:X7EC:FLQL:LSE2:KQKS"
+}
 ```
 
 然后对该字符串进行base64Url编码（base64在线编码网址），得到token-header，base64Url就是先进行base64编码，再把得到的字符串中的+变成-，/变成_，去掉=。
@@ -154,7 +167,22 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IkhNNjY6NkNYUzpaQlBROk1ENVo6QlJZVTpT
 payload内容去掉空白字符后得到：
 
 ```sh
-{"iss":"registry-token-issuer","sub":"","aud":"token-service","exp":1536204479,"nbf":1536202679,"iat":1536202679,"jti":"KF76FTQQ4tIvvCbR","access":[{"type":"repository","name":"library/registry","actions":["pull"]}]}
+{
+  "iss":"registry-token-issuer",
+  "sub":"","aud":"token-service",
+  "exp":1536204479,
+  "nbf":1536202679,
+  "iat":1536202679,
+  "jti":"KF76FTQQ4tIvvCbR",
+  "access":
+    [
+      {
+        "type":"repository",
+        name":"library/registry",
+        "actions":["pull"],
+      }
+    ]
+}
 ```
 
 然后对该字符串进行base64Url编码，得到token-payload：
