@@ -1,0 +1,140 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><meta http-equiv=x-ua-compatible content="IE=edge, chrome=1"><title>开发环境准备 - wall-e's craft</title><meta name=Description content="关于 LoveIt 主题"><meta property="og:title" content="开发环境准备"><meta property="og:description" content="编排依赖的服务容器 这里，容器化准备开发所依赖的环境。 下面的示例配置了redis，minio，postgres_db, registry的服务。"><meta property="og:type" content="article"><meta property="og:url" content="https://huangjingwei.github.io/posts/dev-env/"><meta property="og:image" content="https://huangjingwei.github.io/logo.png"><meta property="article:published_time" content="2023-07-01T01:31:07+00:00"><meta property="article:modified_time" content="2023-07-01T01:31:07+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://huangjingwei.github.io/logo.png"><meta name=twitter:title content="开发环境准备"><meta name=twitter:description content="编排依赖的服务容器 这里，容器化准备开发所依赖的环境。 下面的示例配置了redis，minio，postgres_db, registry的服务。"><meta name=application-name content="LoveIt"><meta name=apple-mobile-web-app-title content="LoveIt"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel=icon href=/Theme/tree.webp><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://huangjingwei.github.io/posts/dev-env/><link rel=prev href=https://huangjingwei.github.io/posts/closure-decorator/><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css><link rel=stylesheet href=/css/style.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"开发环境准备","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/huangjingwei.github.io\/posts\/dev-env\/"},"image":["https:\/\/huangjingwei.github.io\/images\/Apple-Devices-Preview.png"],"genre":"posts","keywords":"Docker","wordcount":349,"url":"https:\/\/huangjingwei.github.io\/posts\/dev-env\/","datePublished":"2023-07-01T01:31:07+00:00","dateModified":"2023-07-01T01:31:07+00:00","license":"This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher":{"@type":"Organization","name":"立青人韦","logo":"https:\/\/huangjingwei.github.io\/images\/avatar.png"},"author":{"@type":"Person","name":"立青人韦"},"description":""}</script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-221439596-1"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','UA-221439596-1');</script></head><body header-desktop=fixed header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem('theme')?localStorage.getItem('theme')==='dark':('dark'==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:'dark'==='dark'))&&document.body.setAttribute('theme','dark');</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="wall-e's craft"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/Theme/walle.webp data-srcset="/Theme/walle.webp, /Theme/walle.webp 1.5x, /Theme/walle.webp 2x" data-sizes=auto alt=/Theme/walle.webp title=/Theme/walle.webp>wall-e's craft</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>所有文章 </a><a class=menu-item href=/categories/>分类 </a><a class=menu-item href=/about/>关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop><input type=text placeholder=只支持首页搜索 id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin"></i></span></span><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题><i class="fas fa-adjust fa-fw"></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="wall-e's craft"><img class="lazyload logo" src=/svg/loading.min.svg data-src=/Theme/walle.webp data-srcset="/Theme/walle.webp, /Theme/walle.webp 1.5x, /Theme/walle.webp 2x" data-sizes=auto alt=/Theme/walle.webp title=/Theme/walle.webp>wall-e's craft</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=只支持首页搜索 id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=搜索><i class="fas fa-search fa-fw"></i></a><a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=清空><i class="fas fa-times-circle fa-fw"></i></a><span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin"></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>取消</a></div><a class=menu-item href=/posts/>所有文章</a><a class=menu-item href=/categories/>分类</a><a class=menu-item href=/about/>关于</a><a href=javascript:void(0); class="menu-item theme-switch" title=切换主题>
+<i class="fas fa-adjust fa-fw"></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>目录</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animated flipInX">开发环境准备</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/ title=Author rel=author class=author><i class="fas fa-user-circle fa-fw"></i>立青人韦</a></span>&nbsp;<span class=post-category>收录于 <a href=/categories/docker/><i class="far fa-folder fa-fw"></i>Docker</a></span></div><div class=post-meta-line><i class="far fa-calendar-check fa-fw"></i>&nbsp;<time datetime=2023-07-01>2023-07-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 349 字&nbsp;
+<i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;
+<span id=busuanzi_container_value_page_pv><i class="far fa-eye fa-fw"></i><span id=busuanzi_value_page_pv></span>&nbsp;次阅读</span></div></div><div class="details toc" id=toc-static kept><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fas fa-angle-right"></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#编排依赖的服务容器>编排依赖的服务容器</a></li><li><a href=#开机自启动>开机自启动</a></li></ul></nav></div></div><div class=content id=content><h2 id=编排依赖的服务容器>编排依赖的服务容器</h2><p>这里，容器化准备开发所依赖的环境。</p><p>下面的示例配置了<code>redis</code>，<code>minio</code>，<code>postgres_db</code>, <code>registry</code>的服务。其他的开发环境也可以按需添加。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-yaml data-lang=yaml>---<span class=w>
+</span><span class=w></span><span class=k>version</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;3&#39;</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>services</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>redis</span><span class=p>:</span><span class=w> 
+</span><span class=w>    </span><span class=k>image</span><span class=p>:</span><span class=w> </span>redis<span class=p>:</span><span class=m>6.2.7</span>-alpine3<span class=m>.16</span><span class=w>
+</span><span class=w>    </span><span class=k>ports</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- <span class=s2>&#34;127.0.0.1:26379:6379&#34;</span><span class=w>
+</span><span class=w>
+</span><span class=w>  </span><span class=k>minio</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=k>image</span><span class=p>:</span><span class=w> </span>minio/minio<span class=p>:</span>RELEASE<span class=m>.2023-02</span>-27T18<span class=m>-10</span>-45Z<span class=w>
+</span><span class=w>    </span><span class=k>command</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- server<span class=w>
+</span><span class=w>      </span>- /srv/minio<span class=w>
+</span><span class=w>    </span><span class=k>ports</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- <span class=s2>&#34;29000:9000&#34;</span><span class=w>
+</span><span class=w>    </span><span class=k>volumes</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- minio-data<span class=p>:</span>/srv/minio<span class=p>:</span>rw<span class=w>
+</span><span class=w>    </span><span class=k>environment</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>MINIO_ACCESS_KEY</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;access&#34;</span><span class=w>
+</span><span class=w>      </span><span class=k>MINIO_SECRET_KEY</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;secret-key&#34;</span><span class=w>
+</span><span class=w>
+</span><span class=w>  </span><span class=k>db</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=k>image</span><span class=p>:</span><span class=w> </span>postgres<span class=p>:</span><span class=m>12.11</span>-alpine3<span class=m>.16</span><span class=w>
+</span><span class=w>    </span><span class=k>ports</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- <span class=s2>&#34;25432:5432&#34;</span><span class=w>
+</span><span class=w>    </span><span class=k>volumes</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- db-data<span class=p>:</span>/var/lib/postgresql/data<span class=w>
+</span><span class=w>    </span><span class=k>environment</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>POSTGRES_USER</span><span class=p>:</span><span class=w> </span>postgres<span class=w>
+</span><span class=w>      </span><span class=k>POSTGRES_DB</span><span class=p>:</span><span class=w> </span>hjw-dev<span class=w>
+</span><span class=w>      </span><span class=k>POSTGRES_PASSWORD</span><span class=p>:</span><span class=w> </span>password<span class=w>
+</span><span class=w>
+</span><span class=w>  </span><span class=k>registry</span><span class=p>:</span><span class=w>
+</span><span class=w>    </span><span class=k>image</span><span class=p>:</span><span class=w> </span>registry<span class=p>:</span><span class=m>2.8.1</span><span class=w>
+</span><span class=w>    </span><span class=k>ports</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span>- <span class=s2>&#34;25000:5000&#34;</span><span class=w>
+</span><span class=w>    </span><span class=k>environment</span><span class=p>:</span><span class=w>
+</span><span class=w>      </span><span class=k>REGISTRY_STORAGE</span><span class=p>:</span><span class=w> </span>s3<span class=w>
+</span><span class=w>      </span><span class=k>REGISTRY_STORAGE_S3_ACCESSKEY</span><span class=p>:</span><span class=w> </span>access<span class=w>
+</span><span class=w>      </span><span class=k>REGISTRY_STORAGE_S3_SECRETKEY</span><span class=p>:</span><span class=w> </span>secret-key<span class=w>
+</span><span class=w>      </span><span class=k>REGISTRY_STORAGE_S3_REGION</span><span class=p>:</span><span class=w> </span>local<span class=w>
+</span><span class=w>      </span><span class=k>REGISTRY_STORAGE_S3_BUCKET</span><span class=p>:</span><span class=w> </span>registry<span class=w>
+</span><span class=w>      </span><span class=k>REGISTRY_STORAGE_S3_REGIONENDPOINT</span><span class=p>:</span><span class=w> </span>http<span class=p>:</span>//localhost<span class=p>:</span><span class=m>29000</span><span class=w>
+</span><span class=w>
+</span><span class=w></span><span class=k>volumes</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>minio-data</span><span class=p>:</span><span class=w>
+</span><span class=w>  </span><span class=k>db-data</span><span class=p>:</span><span class=w>
+</span></code></pre></td></tr></table></div></div><h2 id=开机自启动>开机自启动</h2><p>为了方便，以上的服务可以配置在开机的时候就绪。</p><p>新建并编辑<code>/etc/systemd/system/docker-compose-dev-app.service</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-toml data-lang=toml><span class=p>[</span><span class=nx>Unit</span><span class=p>]</span>
+<span class=nx>Description</span><span class=p>=</span><span class=nx>Docker</span> <span class=nx>Compose</span> <span class=nx>Develop</span> <span class=nx>Application</span> <span class=nx>Service</span>
+<span class=nx>Requires</span><span class=p>=</span><span class=nx>docker</span><span class=p>.</span><span class=nx>service</span>
+<span class=nx>After</span><span class=p>=</span><span class=nx>docker</span><span class=p>.</span><span class=nx>service</span>
+
+<span class=p>[</span><span class=nx>Service</span><span class=p>]</span>
+<span class=nx>Type</span><span class=p>=</span><span class=nx>oneshot</span>
+<span class=nx>RemainAfterExit</span><span class=p>=</span><span class=nx>yes</span>
+<span class=nx>WorkingDirectory</span><span class=p>=</span><span class=err>/</span><span class=nx>home</span><span class=err>/</span><span class=nx>hjw</span><span class=err>/</span><span class=nx>Code</span><span class=err>/</span><span class=nx>python</span><span class=err>-</span><span class=nx>example</span><span class=err>/</span><span class=nx>dev</span>
+<span class=nx>ExecStart</span><span class=p>=</span><span class=err>/</span><span class=nx>usr</span><span class=err>/</span><span class=nx>bin</span><span class=err>/</span><span class=nx>docker</span><span class=err>-</span><span class=nx>compose</span> <span class=nx>up</span> <span class=err>-</span><span class=nx>d</span>
+<span class=nx>ExecStop</span><span class=p>=</span><span class=err>/</span><span class=nx>usr</span><span class=err>/</span><span class=nx>bin</span><span class=err>/</span><span class=nx>docker</span><span class=err>-</span><span class=nx>compose</span> <span class=nx>down</span>
+<span class=nx>TimeoutStartSec</span><span class=p>=</span><span class=mi>0</span>
+
+<span class=p>[</span><span class=nx>Install</span><span class=p>]</span>
+<span class=nx>WantedBy</span><span class=p>=</span><span class=nx>multi</span><span class=err>-</span><span class=nx>user</span><span class=p>.</span><span class=nx>target</span>
+</code></pre></td></tr></table></div></div><p>以上的<code>WorkingDirectory</code>需要配置真实的docker-compose文件的所在目录，<strong>需填写绝对路径</strong>。</p><p>然后执行：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>sudo systemctl <span class=nb>enable</span> docker-compose-dev-app.service
+</code></pre></td></tr></table></div></div><p>如果失败可以用以下命令查看详细原因。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre class=chroma><code class=language-sh data-lang=sh>sudo systemctl status docker-compose-dev-app.service
+</code></pre></td></tr></table></div></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>更新于 2023-07-01</span></div><div class=post-info-license></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="分享到 微博" data-sharer=weibo data-url=https://huangjingwei.github.io/posts/dev-env/ data-title=开发环境准备><i class="fab fa-weibo fa-fw"></i></a><a href=javascript:void(0); title="分享到 百度" data-sharer=baidu data-url=https://huangjingwei.github.io/posts/dev-env/ data-title=开发环境准备><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/baidu.svg></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw"></i>&nbsp;<a href=/tags/docker/>Docker</a></section><section><span><a href=javascript:void(0); onclick=window.history.back();>返回</a></span>&nbsp;|&nbsp;<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/posts/closure-decorator/ class=prev rel=prev title=闭包><i class="fas fa-angle-left fa-fw"></i>闭包</a></div></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line><i class="far fa-copyright fa-fw"></i><span itemprop=copyrightYear>2021 - 2023</span><span class=author itemprop=copyrightHolder>&nbsp;<a href=/ target=_blank>立青人韦</a></span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><section><span id=busuanzi_container_value_site_pv><i class="far fa-eye fa-fw"></i><span id=busuanzi_value_site_pv></span></span>&nbsp;|&nbsp;
+<span id=busuanzi_container_value_site_uv><i class="fa fa-user"></i><span id=busuanzi_value_site_uv></span></span></section></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title=回到顶部><i class="fas fa-arrow-up fa-fw"></i></a><a href=# id=view-comments class=fixed-button title=查看评论><i class="fas fa-comment fa-fw"></i></a></div><script type=text/javascript src=https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js></script><script type=text/javascript>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":100},"comment":{},"search":{"algoliaAppID":"L8XFWN22VQ","algoliaIndex":"huangjingwei.github.io","algoliaSearchKey":"58a5da67e2335a52af3bab1a36a9cce1","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"}};</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
