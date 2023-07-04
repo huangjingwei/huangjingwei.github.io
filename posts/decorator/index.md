@@ -5,28 +5,34 @@
 
 装饰器本质上是一个`Python`函数或类，它可以让其他函数或类在不需要做任何代码修改的前提下增加额外功能，装饰器的返回值也是一个函数/类对象。
 
-在闭包的笔记中提到装饰器的形式：`decorated = outer(foo)`，类似“套娃”。
+在[Python闭包]的笔记中提到装饰器的形式：`decorated = outer(foo)`，类似“套娃”。
 
 ## 函数装饰器
 
 ```python
 def decorator(fn):
     def wrapper(arg):
+        """This is docstring of wrapper."""
         print("In wrapper, arg is %s, fn is %s"%(arg, fn.__name__))
         return fn(arg)
     return wrapper
 
 @decorator
 def outer(arg):
+    """This is docstring of outer."""
     print("In outer, arg is %s"%arg)
 
 print("Finished decorating outer()")
 print(outer)
+print(outer.__name__)
+print(outer.__doc__)
 outer("walle")
 
 #output
 Finished decorating outer()
-<function decorator.<locals>.wrapper at 0x7f897871e3b0>
+<function decorator.<locals>.wrapper at 0x7f60d4af2e60>
+wrapper
+This is docstring of wrapper.
 In wrapper, arg is walle, fn is outer
 In outer, arg is walle
 ```
@@ -84,7 +90,6 @@ outer = Decorator(outer) # 这里的装饰器返回的是一个类的实例对�
 ## 对象装饰器
 
 ```python
-
 class Decorator(object):
      def __init__(self, arg):
          print("In __init__, arg is %s"%arg)
@@ -92,23 +97,29 @@ class Decorator(object):
      def __call__(self, fn):
          print("In __call__, fn is %s"%fn.__name__)
          def wrapper(arg):
+            """This is docstring of wrapper."""
             arg = self.arg + ' ' +arg
             fn(arg)
          return wrapper
  
 @Decorator("Hello")
 def outer(arg1):
+    """This is docstring of outer."""
     print("%s In outer"%arg1)
     
 print("Finished decorating outer()")
 print(outer)
+print(outer.__name__)
+print(outer.__doc__)
 outer("walle")
 
 #output
 In __init__, arg is Hello
 In __call__, fn is outer
 Finished decorating outer()
-<function Decorator.__call__.<locals>.wrapper at 0x7f468ba19c60>
+<function Decorator.__call__.<locals>.wrapper at 0x7f152b182f80>
+wrapper
+This is docstring of wrapper.
 Hello walle In outer
 ```
 
@@ -170,5 +181,57 @@ outer = decorator_b(decorator_a(outer)) # 这里的装饰器返回的是一个�
 
 `decorator_a(outer)`的执行结果是返回了`inner_a`，`decorator_b(inner_a)`的执行结果是返回一个`inner_b`。
 
-
 当`outer("walle")`传入参数进行调用时，就是调用`inner_b("walle")`，它会先打印`In inner_b`，然后在`inner_b`内部调用了`fun`即`inner_a`，所以会再打印`In inner_a`, 然后再`inner_a`内部调用的原来的`fun`即`outer`。
+
+再形象一点，可以把装饰器想象成洋葱，由近及远对函数进行层层包裹，执行的时候就是拿一把刀从一侧开始切，直到切到另一侧结束。
+
+## functools.wraps 属性拷贝
+
+经过装饰器之后的函数还是原来的函数吗？原来的函数肯定还存在的，只不过真正调用的是装饰后生成的新函数。
+
+可以用`functools.wraps`内部通过`partial`和`update_wrapper`对函数进行再加工，将原始被装饰函数`outer`的属性拷贝给装饰器函数`wrapper`。
+
+```python
+from functools import wraps
+
+class Decorator(object):
+     def __init__(self, arg):
+         print("In __init__, arg is %s"%arg)
+         self.arg = arg
+     def __call__(self, fn):
+         print("In __call__, fn is %s"%fn.__name__)
+         @wraps(fn)
+         def wrapper(arg):
+            """This is docstring of wrapper."""
+            arg = self.arg + ' ' +arg
+            fn(arg)
+         return wrapper
+ 
+@Decorator("Hello")
+def outer(arg1):
+    """This is docstring of outer."""
+    print("%s In outer"%arg1)
+    
+print("Finished decorating outer()")
+print(outer)
+print(outer.__name__)
+print(outer.__doc__)
+outer("walle")
+
+#output
+In __init__, arg is Hello
+In __call__, fn is outer
+Finished decorating outer()
+<function outer at 0x7f3f41656f80>
+outer
+This is docstring of outer.
+Hello walle In outer
+```
+
+可以看出，被装饰后的`outer`也拥有了原来函数的属性。
+
+关于`functools.wraps`的实现逻辑，可以参阅[Python functools.wraps 深入理解]。
+
+[Python闭包]:../closure
+[Python functools.wraps 深入理解]:https://zhuanlan.zhihu.com/p/45535784
+
